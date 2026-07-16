@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: inventory-manager-api
+  main:
+    banner-mode: off
+  # Datasource Configuration
+  datasource:
+    url: jdbc:h2:mem:inventory-manager-db;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS app
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  # H2 Console (desenvolvimento)
+  h2:
+    console:
+      enabled: true
+  sql:
+    init:
+      mode: always
+  # JPA Configuration
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 6000ms
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # ← Expõe TODOS os endpoints (dev only)
+  endpoint:
+    health:
+      show-details: always  # ← Mostra detalhes sempre
+
+  health:
+    circuitbreakers:
+      enabled: true  # ← Habilita health dos CBs
+
+
